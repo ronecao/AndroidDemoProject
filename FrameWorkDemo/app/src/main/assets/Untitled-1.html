@@ -1,0 +1,22 @@
+<html>
+
+<script>
+        function callJS(arg){
+            document.getElementById('replaceme').innerHTML=arg;
+            alert("arg="+arg);
+        } //Android后台java会来调用它
+    </script>
+<body>
+<a href="#"  onclick="window.alert('AlertfromJavaScript')">
+        alert调用toast</a><br>
+    
+    <a href="#" onclick="window.android.callAndroid('HellofromBrowser')">
+        js调用java方法</a><br>
+    <a href="#" onclick="window.android.callAndroid222('HellofromBrowser2222','333')">
+        js调用java方法2</a>
+    <!--//js通过自己定义“android"接口来调用java类中的方法，"android"可以改成任意的，但必须和java中设置的接口名一致-->
+    <br />
+    <p id="replaceme">
+    </p>
+<body>
+</html>

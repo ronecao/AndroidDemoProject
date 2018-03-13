@@ -1,0 +1,72 @@
+<html>
+	<script src="com.cmsonline.framework.js"></script>
+	<script>
+	function sale()
+	{
+		transDict=    "{\"Amount\":\"1.00\",";
+        transDict=transDict + "\"Tender\":\"Credit\"}";		
+		processSale(transDict);
+	}
+		function auth()
+	{
+		transDict=    "{\"Amount\":\"1.00\",";
+        transDict=transDict + "\"Tender\":\"Credit\"}";
+		processAuthorization(transDict);
+	}
+	function capt()
+	{
+		transDict=    "{\"Amount\":\"1.00\",";
+        transDict=transDict + "\"Tender\":\"Credit\"}";
+		processCapture(transDict);
+	}
+
+	function startreturn()
+	{
+		transDict=    "{\"Amount\":\"1.00\",";
+        transDict=transDict + "\"Tender\":\"Credit\"}";
+		processReturn(transDict);
+	}
+	function startvoid()
+	{
+		transDict=    "{\"Amount\":\"1.00\",";
+        transDict=transDict + "\"Tender\":\"Credit\"}";
+		processVoid(transDict);
+	}
+	</script>
+	
+<body>
+<p><a href="#"  onclick="window.alert('AlertfromJavaScript')">
+alertCalltoast</a></p>
+<p><br>
+  
+  <input type="button" name="button" id="button" value="init" onclick="initFramework('phQP9iBIEgl4nEFi8vQmFf25q6m8PieC')">
+</p>
+<p><br>
+<input type="button" name="button" id="button" value="sale" onclick="sale()"/>
+</p>
+<p><br>
+    <input type="button" name="button" id="button" value="auth" onclick="auth()"/>
+</p>
+<p><br>
+    <input type="button" name="button" id="button" value="cap" onclick="capt()"/>
+</p>
+<p><br>
+    <input type="button" name="button" id="button" value="return" onclick="startreturn()"/>
+</p>
+<p><br>
+    <input type="button" name="button" id="button" value="void" onclick="startvoid()"/>
+</p>
+<p><br />
+ <input type="button" name="button" id="button" value="gepinpaged" onclick="getPinpads()"/>
+  <br/>
+  <br/>
+  <input type="button" name="button" id="button" value="connectpinpad" onclick="connectPinpad()"/>
+  <br/>
+  <br/>
+	<input type="button" name="button" id="button" value="TMSUpdate" onclick="TMSupdate()"/>
+  <br />
+</p>
+    <p id="replaceme">
+    </p>
+<body>
+</html>

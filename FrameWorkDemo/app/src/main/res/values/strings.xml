@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">FrameWorkDemo</string>
+    <string name="title_home">Demo</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="init_button">init</string>
+    <string name="date_picker_title">select Date</string>
+</resources>
