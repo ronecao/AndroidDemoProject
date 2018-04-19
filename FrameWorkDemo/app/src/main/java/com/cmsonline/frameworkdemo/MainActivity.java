@@ -269,13 +269,12 @@ public class MainActivity extends AppCompatActivity implements EMVIOListener,Sel
                     right = left + v.getWidth();
             if (event.getX() > left && event.getX() < right
                     && event.getY() > top && event.getY() < bottom) {
-                // 点击EditText的事件，忽略它。
+
                 return false;
             } else {
                 return true;
             }
         }
-        // 如果焦点不是EditText则忽略，这个发生在视图刚绘制完，第一个焦点不在EditText上，和用户用轨迹球选择其他的焦点
         return false;
     }
 
@@ -362,7 +361,7 @@ public class MainActivity extends AppCompatActivity implements EMVIOListener,Sel
                     double amtdouble= (double)Integer.parseInt(amounterString)/100;
                     amounterString= String.valueOf(amtdouble);
                     Log.v("appliction",amounterString);
-
+                    mAPITokenText.setText("3fyl02KZBOERy7yEd6SkWqbuYmGqHQ2T");//cardflight
                     cmsf= new EMVIOFramework(getApplicationContext(),mAPITokenText.getText().toString(),"",MainActivity.this);
                     break;
                 case R.id.saleBtn:
@@ -507,7 +506,7 @@ public class MainActivity extends AppCompatActivity implements EMVIOListener,Sel
                         Log.v("Application","pinpad:"+name);
 
                             cmsf.selectPinpad(name);
-                            break;
+                            //break;
 
                     }
                     break;
