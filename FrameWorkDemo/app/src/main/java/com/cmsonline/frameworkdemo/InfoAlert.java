@@ -20,7 +20,7 @@ import org.w3c.dom.Text;
 public class InfoAlert extends DialogFragment {
     public static final String ARG_MSG="MESSAGE";
     public static InfoAlert newInstance(String msg) {
-        Bundle args=new Bundle();
+        Bundle args = new Bundle();
         args.putSerializable(ARG_MSG,msg);
         InfoAlert dpf = new InfoAlert();
         dpf.setArguments(args);
@@ -29,7 +29,7 @@ public class InfoAlert extends DialogFragment {
     }
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        String message= (String)getArguments().getSerializable(ARG_MSG);
+        String message = (String)getArguments().getSerializable(ARG_MSG);
         View v = LayoutInflater.from( getActivity()).inflate(R.layout.infor_alert, null);
         TextView msgtext = v.findViewById(R.id.msgcontent);
 

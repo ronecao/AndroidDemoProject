@@ -74,14 +74,13 @@ public class FileOpt {
     }
     public int addTransaction(int Module,String content,int transtype)
     {
-        String filename=null;
-        String filecontent=null;
+        String filename = null;
+        String filecontent = null;
         JSONObject json_result =null;
         switch (Module)
         {
             case M10:
-                switch (transtype)
-                {
+                switch (transtype) {
                     case SALE:
                         filename = M10SALE;
                         break;
@@ -102,8 +101,7 @@ public class FileOpt {
                 }
                 break;
             case MP200:
-                switch (transtype)
-                {
+                switch (transtype) {
                     case SALE:
                         filename = MP200SALE;
                         break;
@@ -114,18 +112,15 @@ public class FileOpt {
                 break;
 
         }
-        if (filename==null)
-        {
+        if (filename==null) {
             return -1;
         }
-        filecontent=read(filename);
+        filecontent = read(filename);
 
-        if (filecontent=="FileNotFound")
-        {
+        if (filecontent == "FileNotFound") {
             filecontent="{ \"data\":[{\"element\":\"input\"}]}";
         }
-        else if(filecontent==null)
-        {
+        else if(filecontent==null) {
             return -3;
         }
 
@@ -136,17 +131,16 @@ public class FileOpt {
             return -2;
         }
         try{
-            JSONArray transarray= json_result.getJSONArray("data");
+            JSONArray transarray = json_result.getJSONArray("data");
             transarray.put(content);
             json_result.put("data",transarray);
-            int saveresult=save(filename,json_result.toString());
-            if (saveresult!=0)
+            int saveresult = save(filename,json_result.toString());
+            if (saveresult != 0)
             {
                 return -4;
             }
 
-        }catch (JSONException e)
-        {
+        }catch (JSONException e) {
             return -3;
         }
 
@@ -157,14 +151,13 @@ public class FileOpt {
 
     public String getTransactions(int Module,int index,int transtype)
     {
-        String filename=null;
-        String filecontent=null;
-        JSONObject json_result =null;
+        String filename = null;
+        String filecontent = null;
+        JSONObject json_result = null;
         switch (Module)
         {
             case M10:
-                switch (transtype)
-                {
+                switch (transtype) {
                     case SALE:
                         filename = M10SALE;
                         break;
@@ -197,14 +190,12 @@ public class FileOpt {
                 break;
 
         }
-        if (filename==null)
-        {
+        if (filename == null) {
             return null;
         }
-        filecontent=read(filename);
+        filecontent = read(filename);
 
-        if (filecontent=="FileNotFound" || filecontent==null)
-        {
+        if (filecontent == "FileNotFound" || filecontent == null) {
             return null;
         }
 
@@ -216,12 +207,11 @@ public class FileOpt {
             return null;
         }
         try{
-            JSONArray transarray= json_result.getJSONArray("data");
+            JSONArray transarray = json_result.getJSONArray("data");
 
          return  transarray.get(index).toString();
 
-        }catch (JSONException e)
-        {
+        }catch (JSONException e) {
             return null;
         }
 
@@ -231,14 +221,12 @@ public class FileOpt {
     }
     public JSONArray getTranactions(int Module,int transtype)
     {
-        String filename=null;
-        String filecontent=null;
-        JSONObject json_result =null;
-        switch (Module)
-        {
+        String filename = null;
+        String filecontent;
+        JSONObject json_result;
+        switch (Module) {
             case M10:
-                switch (transtype)
-                {
+                switch (transtype) {
                     case SALE:
                         filename = M10SALE;
                         break;
@@ -248,8 +236,7 @@ public class FileOpt {
                 }
                 break;
             case A200:
-                switch (transtype)
-                {
+                switch (transtype) {
                     case SALE:
                         filename = A200SALE;
                         break;
@@ -259,8 +246,7 @@ public class FileOpt {
                 }
                 break;
             case MP200:
-                switch (transtype)
-                {
+                switch (transtype) {
                     case SALE:
                         filename = MP200SALE;
                         break;
@@ -271,48 +257,34 @@ public class FileOpt {
                 break;
 
         }
-        if (filename==null)
-        {
+        if (filename==null) {
             return null;
         }
-        filecontent=read(filename);
-
-        if (filecontent=="FileNotFound" || filecontent==null)
-        {
+        filecontent = read(filename);
+        if (filecontent ==" FileNotFound" || filecontent == null) {
             return null;
         }
-
-
         try {
             json_result = new JSONObject(filecontent);
-        }catch (Exception e)
-        {
+        }catch (Exception e) {
             return null;
         }
         try{
-            JSONArray transarray= json_result.getJSONArray("data");
+            JSONArray transarray = json_result.getJSONArray("data");
 
             return  transarray;
 
-        }catch (JSONException e)
-        {
+        }catch (JSONException e) {
             return null;
         }
-
-
-
-
     }
-    public int removeTransaction(int Module,int index,int transtype)
-    {
+    public int removeTransaction(int Module,int index,int transtype) {
         String filename=null;
-        String filecontent=null;
-        JSONObject json_result =null;
-        switch (Module)
-        {
+        String filecontent;
+        JSONObject json_result;
+        switch (Module) {
             case M10:
-                switch (transtype)
-                {
+                switch (transtype) {
                     case SALE:
                         filename = M10SALE;
                         break;
@@ -322,8 +294,7 @@ public class FileOpt {
                 }
                 break;
             case A200:
-                switch (transtype)
-                {
+                switch (transtype) {
                     case SALE:
                         filename = A200SALE;
                         break;
@@ -333,8 +304,7 @@ public class FileOpt {
                 }
                 break;
             case MP200:
-                switch (transtype)
-                {
+                switch (transtype) {
                     case SALE:
                         filename = MP200SALE;
                         break;
@@ -345,25 +315,21 @@ public class FileOpt {
                 break;
 
         }
-        if (filename==null)
-        {
+        if (filename==null) {
             return -1;
         }
         filecontent=read(filename);
 
-        if (filecontent=="FileNotFound")
-        {
+        if (filecontent=="FileNotFound") {
             return -4;
         }
-        else if(filecontent==null)
-        {
+        else if(filecontent==null) {
             return -5;
         }
 
         try {
             json_result = new JSONObject(filecontent);
-        }catch (Exception e)
-        {
+        }catch (Exception e) {
             return -2;
         }
         try{
@@ -371,30 +337,22 @@ public class FileOpt {
             transarray.remove(index);
             json_result.put("data",transarray);
             int saveresult=save(filename,json_result.toString());
-            if (saveresult!=0)
-            {
+            if (saveresult!=0) {
                 return -4;
             }
 
-        }catch (JSONException e)
-        {
+        }catch (JSONException e) {
             return -3;
         }
-
-
-
         return 0;
     }
-    public int deleteFile(int Module,int transtype)
-    {
+    public int deleteFile(int Module,int transtype) {
         String filename=null;
         String filecontent=null;
         JSONObject json_result =null;
-        switch (Module)
-        {
+        switch (Module) {
             case M10:
-                switch (transtype)
-                {
+                switch (transtype) {
                     case SALE:
                         filename = M10SALE;
                         break;
@@ -404,8 +362,7 @@ public class FileOpt {
                 }
                 break;
             case A200:
-                switch (transtype)
-                {
+                switch (transtype) {
                     case SALE:
                         filename = A200SALE;
                         break;
@@ -415,8 +372,7 @@ public class FileOpt {
                 }
                 break;
             case MP200:
-                switch (transtype)
-                {
+                switch (transtype) {
                     case SALE:
                         filename = MP200SALE;
                         break;
@@ -427,25 +383,19 @@ public class FileOpt {
                 break;
 
         }
-        if (filename==null)
-        {
+        if (filename==null) {
             return -1;
         }
         filecontent=read(filename);
-
-        if (filecontent=="FileNotFound")
-        {
+        if (filecontent=="FileNotFound") {
             return -4;
         }
-        else if(filecontent==null)
-        {
+        else if(filecontent==null) {
             return -5;
         }
-
         try {
             json_result = new JSONObject(filecontent);
-        }catch (Exception e)
-        {
+        }catch (Exception e) {
             return -2;
         }
         try{
@@ -454,13 +404,10 @@ public class FileOpt {
             transarray.remove(index);
             json_result.put("data",transarray);
             int saveresult=save(filename,json_result.toString());
-            if (saveresult!=0)
-            {
+            if (saveresult!=0) {
                 return -4;
             }
-
-        }catch (JSONException e)
-        {
+        }catch (JSONException e) {
             return -3;
         }
         return 0;
@@ -479,29 +426,12 @@ public class FileOpt {
         return 0;
     }
     private   int save(String fileName,String content ) {
-
-        //String content = editText.getText().toString();
-
-
-        try {
-            /* 根据用户提供的文件名，以及文件的应用模式，打开一个输出流.文件不存系统会为你创建一个的，
-             * 至于为什么这个地方还有FileNotFoundException抛出，我也比较纳闷。在Context中是这样定义的
-             *   public abstract FileOutputStream openFileOutput(String name, int mode)
-             *   throws FileNotFoundException;
-             * openFileOutput(String name, int mode);
-             * 第一个参数，代表文件名称，注意这里的文件名称不能包括任何的/或者/这种分隔符，只能是文件名
-             *          该文件会被保存在/data/data/应用名称/files/chenzheng_java.txt
-             * 第二个参数，代表文件的操作模式
-             *          MODE_PRIVATE 私有（只能创建它的应用访问） 重复写入时会文件覆盖
-             *          MODE_APPEND  私有   重复写入时会在文件的末尾进行追加，而不是覆盖掉原来的文件
-             *          MODE_WORLD_READABLE 公用  可读
-             *          MODE_WORLD_WRITEABLE 公用 可读写
-             *  */
-            FileOutputStream outputStream = mContext.openFileOutput(fileName,
-                    Activity.MODE_PRIVATE);
-            outputStream.write(content.getBytes());
-            outputStream.flush();
-            outputStream.close();
+    try {
+        FileOutputStream outputStream = mContext.openFileOutput(fileName,
+                Activity.MODE_PRIVATE);
+        outputStream.write(content.getBytes());
+        outputStream.flush();
+        outputStream.close();
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -514,10 +444,6 @@ public class FileOpt {
 
     }
 
-    /**
-     * @author chenzheng_java
-     * 读取刚才用户保存的内容
-     */
     private String read(String fileName) {
         try {
             FileInputStream inputStream = mContext.openFileInput(fileName);

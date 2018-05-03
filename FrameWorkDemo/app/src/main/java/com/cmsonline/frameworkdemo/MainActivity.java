@@ -36,11 +36,15 @@ import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity implements EMVIOListener,SelectTransactionCompleted {
 
-    private TextView mTextMessage;
-    private  MainActivity mMainActivity;
     private EditText amountText;
     private EditText mAuthcodeText;
     private EditText mAPITokenText;
+    private Button mInitBtn;
+    private Button mSaleBtn;
+    private Button mCapBtn;
+    private Button mReturnBtn;
+    private Button mAuthBtn;
+    private Button mVoidBtn;
     private Button mSelectionBtn;
     private Button mConnectBtn;
     private Button mUpdateBtn;
@@ -53,19 +57,12 @@ public class MainActivity extends AppCompatActivity implements EMVIOListener,Sel
     @Override
     public void initCompleted(String result){
         Log.v("APPLICATION", "Completed" + result);
-        runOnUiThread(new Runnable()
-        {
-
-            public void run()
-
-            {
-
-                mTransmessage.setText("InitCompleted");
-
+        final String res = result;
+        runOnUiThread(new Runnable() {
+            public void run() {
+                mTransmessage.setText("InitCompleted " + res);
+                enableUtility();
             }
-
-
-
         });
 
 
@@ -103,23 +100,21 @@ public class MainActivity extends AppCompatActivity implements EMVIOListener,Sel
     public void pinPadDisattached(){
 
     }
+    @Override
+    public void verifySignature(boolean verify) {
 
-    public void verifySignature(boolean verify)
-    {
         cmsf.signatureVerified(true);
     }
-    public void voiceRefferal(boolean verify,String phone)
-    {
-        cmsf.phoneReferral(true,"123456");
+    @Override
+    public void voiceRefferal(boolean verify,String phone) {
+
+        cmsf.phoneReferral(true,"123456");//testing phone refferal result
     }
-    public void TMSupdateCompleted(String Result)
-    {
+    @Override
+    public void TMSupdateCompleted(String Result) {
         final String updatestr=Result;
         runOnUiThread(new Runnable() {
-
-            public void run()
-
-            {
+            public void run() {
                 String mes = mTransmessage.getText() + "\r\n" + updatestr;
                 mTransmessage.setText(mes);
                 Log.v("APPLICATION", updatestr);
@@ -131,9 +126,7 @@ public class MainActivity extends AppCompatActivity implements EMVIOListener,Sel
     {
         final String updatestr=msg;
         runOnUiThread(new Runnable() {
-
             public void run()
-
             {
                 String mes = mTransmessage.getText() + "\r\n" + updatestr;
                 mTransmessage.setText(mes);
@@ -142,14 +135,12 @@ public class MainActivity extends AppCompatActivity implements EMVIOListener,Sel
         });
     }
     @Override
-    public void confirmCardinfo(String msg)
-    {
-        Log.v("APPLICATION", msg);
+    public void confirmCardinfo(String msg) {
+        String mes = mTransmessage.getText() + "\r\n" + msg;
+        mTransmessage.setText("confirmed Cardinfo:" + msg);
+        Log.v("APPLICATION", "confirmCardinfo" + mes);
         cmsf.confirmCardinfoResult(ConfirmCard.CMS_CONFIRMED);
-
-    }
-
-
+     }
     @Override
     public void transactionSaleCompleted(String resultDict){
         Log.v("APPLICATION", resultDict);
@@ -157,14 +148,8 @@ public class MainActivity extends AppCompatActivity implements EMVIOListener,Sel
         JSONObject json_result;
         FragmentManager manager = getFragmentManager();
         InfoAlert alert= InfoAlert.newInstance(resultDict);
-        //alert.setTargetFragment(MainActivity.this,null);
-        alert.show(manager,"TEST");
-
+        alert.show(manager,"Result");
         int modulevalue;
-
-
-
-
         try {
             FileOpt file = new FileOpt(getApplication());
             json_result = new JSONObject(resultDict);
@@ -175,18 +160,16 @@ public class MainActivity extends AppCompatActivity implements EMVIOListener,Sel
         {
 
         }
-
     }
     @Override
     public void selectAID(String [] AIDName){
 
     }
     @Override
-   public void transAuthorizationCompleted(String resultDict){
+    public void transAuthorizationCompleted(String resultDict){
         Log.v("APPLICATION", resultDict);
         FragmentManager manager = getFragmentManager();
         InfoAlert alert= InfoAlert.newInstance(resultDict);
-        //alert.setTargetFragment(MainActivity.this,null);
         alert.show(manager,"Authroization");
         JSONObject json_result;
         int modulevalue;
@@ -200,22 +183,18 @@ public class MainActivity extends AppCompatActivity implements EMVIOListener,Sel
         {
 
         }
-
    }
    @Override
-   public void transactionCaptureCompleted(String resultDict)
-   {
+   public void transactionCaptureCompleted(String resultDict) {
        Log.v("APPLICATION", resultDict);
        FragmentManager manager = getFragmentManager();
        InfoAlert alert= InfoAlert.newInstance(resultDict);
-       //alert.setTargetFragment(MainActivity.this,null);
        alert.show(manager,"Authroization");
        JSONObject json_result;
        try {
            json_result = new JSONObject(resultDict);
            mAuthcodeText.setText(json_result.getString("Reference"));
-       }catch (Exception e)
-       {
+       }catch (Exception e) {
 
        }
    }
@@ -226,20 +205,16 @@ public class MainActivity extends AppCompatActivity implements EMVIOListener,Sel
         JSONObject json_result;
         FragmentManager manager = getFragmentManager();
         InfoAlert alert= InfoAlert.newInstance(resultDict);
-        //alert.setTargetFragment(MainActivity.this,null);
         alert.show(manager,"TEST");
-
     }
+    @Override
     public void transactionVoidCompleted(String resultDict){
         Log.v("APPLICATION", resultDict);
         Log.v("APPLICATION", "length "+resultDict.length());
         JSONObject json_result;
         FragmentManager manager = getFragmentManager();
         InfoAlert alert= InfoAlert.newInstance(resultDict);
-        //alert.setTargetFragment(MainActivity.this,null);
         alert.show(manager,"TEST");
-
-
     }
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
@@ -296,45 +271,66 @@ public class MainActivity extends AppCompatActivity implements EMVIOListener,Sel
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mMainActivity=this;
-        mTextMessage = (TextView) findViewById(R.id.message);
         mTransmessage=(TextView) findViewById(R.id.messagetxtView);
-        //BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-       // navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         setupGUI();
     }
+    private  void disablebtn() {
+        mSelectionBtn.setEnabled(false);
+        mUpdateBtn.setEnabled(false);
+        mConnectBtn.setEnabled(false);
+        mSaleBtn.setEnabled(false);
+        mVoidBtn.setEnabled(false);
+        mReturnBtn.setEnabled(false);
+        mAuthBtn.setEnabled(false);
+        mCapBtn.setEnabled(false);
 
+    }
+
+    private  void enableUtility() {
+        mSelectionBtn.setEnabled(true);
+        mUpdateBtn.setEnabled(true);
+        mConnectBtn.setEnabled(true);
+
+
+    }
+    private  void enableTrans() {
+        mSaleBtn.setEnabled(true);
+        mVoidBtn.setEnabled(true);
+        mReturnBtn.setEnabled(true);
+        mAuthBtn.setEnabled(true);
+        mCapBtn.setEnabled(true);
+
+    }
+
+    /**
+     * setup GUI component
+     */
     private void setupGUI()
     {
         if(Build.VERSION.SDK_INT>=23) {
-
             requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO,Manifest.permission.BLUETOOTH_ADMIN,Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_PHONE_STATE}, 0);
-            //            this.b("android.permission.BLUETOOTH");
-
         }
-
-        Button initBtn =  (Button)findViewById(R.id.initBtn);
-        initBtn.setText(R.string.init_button);
-        //initBtn.setPadding(50,50,50,50);
-
-        amountText= (EditText) findViewById(R.id.amountInput);
+        amountText = (EditText) findViewById(R.id.amountInput);
         mAuthcodeText = (EditText) findViewById(R.id.authCodeEditText);
 
         ClickListener l = new ClickListener();
-        initBtn.setOnClickListener(l);
+        mInitBtn =  (Button)findViewById(R.id.initBtn);
+        mInitBtn.setOnClickListener(l);
 
-        Button saleBtn=(Button)findViewById(R.id.saleBtn);
-        saleBtn.setOnClickListener(l);
+        mSaleBtn = (Button)findViewById(R.id.saleBtn);
+        mSaleBtn.setOnClickListener(l);
 
-        Button capBtn=(Button)findViewById(R.id.capBtn);
-        capBtn.setOnClickListener(l);
+        mCapBtn = (Button)findViewById(R.id.capBtn);
+        mCapBtn.setOnClickListener(l);
 
-        Button authBtn=(Button)findViewById(R.id.authBtn);
-        authBtn.setOnClickListener(l);
-        Button voidBtn=(Button)findViewById(R.id.voidBtn);
-        voidBtn.setOnClickListener(l);
-        Button returnBtn=(Button)findViewById(R.id.returnBtn);
-        returnBtn.setOnClickListener(l);
+        mAuthBtn = (Button)findViewById(R.id.authBtn);
+        mAuthBtn.setOnClickListener(l);
+
+        mVoidBtn = (Button)findViewById(R.id.voidBtn);
+        mVoidBtn.setOnClickListener(l);
+
+        mReturnBtn = (Button)findViewById(R.id.returnBtn);
+        mReturnBtn.setOnClickListener(l);
         mSelectionBtn = (Button) findViewById(R.id.selbtn);
         mSelectionBtn.setOnClickListener(l);
 
@@ -345,90 +341,60 @@ public class MainActivity extends AppCompatActivity implements EMVIOListener,Sel
         mUpdateBtn.setOnClickListener(l);
         mAPITokenText = (EditText) findViewById(R.id.APIKey);
 
+        disablebtn();
+
     }
 
     class ClickListener implements View.OnClickListener{
         Editable amtstr;
         String transDict;
         @Override
-        public void onClick(View v)
-        {
-            switch (v.getId())
-            {
+        public void onClick(View v) {
+            switch (v.getId()) {
                 case R.id.initBtn:
-
                     String amounterString = "123";
                     double amtdouble= (double)Integer.parseInt(amounterString)/100;
                     amounterString= String.valueOf(amtdouble);
                     Log.v("appliction",amounterString);
-                    mAPITokenText.setText("3fyl02KZBOERy7yEd6SkWqbuYmGqHQ2T");//cardflight
+                    //mAPITokenText.setText("phQP9iBIEgl4nEFi8vQmFf25q6m8PieC");//creditcall
+                    //mAPITokenText.setText("1FgJZnjTAfBVi3fWysrnPpxIdGxTfNls");//creditcall staging server
+                    //mAPITokenText.setText("942jLxAksR3AgTyyXYy1T8Gx45dILWkK");//creditcall staging server
+                    //mAPITokenText.setText("942jLxAksR3AgTyyXYy1T8Gx45dILWkK");
+                    //mAPITokenText.setText("teiU6f4zf6dBx9oGDKx4bBxOqmADhAWG");//usaepay
+                    //mAPITokenText.setText("5n034PIJYinL2uULyvr3nSdA626zcuY0");//usaepay testing
+                    //mAPITokenText.setText("kr9JqUdTZ01ZXywF5MsJC2C3Gcx7lFmP");
+                    //mAPITokenText.setText("2l588Thtu6dfFamFKg4JAYCn5XlUzqoC");//USAePAY live
+                    //mAPITokenText.setText("3fyl02KZBOERy7yEd6SkWqbuYmGqHQ2T");//cardflight
+                    //mAPITokenText.setText("vno1tqMPFUjsDngozHpyLPQPbKeUB89Z");
+                    //mAPITokenText.setText("3fyl02KZBOERy7yEd6SkWqbuYmGqHQ2T");//cardflight
+                    //mAPITokenText.setText("1FgJZnjTAfBVi3fWysrnPpxIdGxTfNls");
+                    mAPITokenText.setText("vno1tqMPFUjsDngozHpyLPQPbKeUB89Z");
                     cmsf= new EMVIOFramework(getApplicationContext(),mAPITokenText.getText().toString(),"",MainActivity.this);
                     break;
                 case R.id.saleBtn:
-                    double dd;
-                     amtstr= amountText.getText();
-                    try{
-                        dd=Double.valueOf(amtstr.toString());
-
-
-                    }catch (Exception e)
-                    {
-                        FragmentManager manager = getFragmentManager();
-                        InfoAlert alert= InfoAlert.newInstance("Ammount format error");
-                        //alert.setTargetFragment(MainActivity.this,null);
-                        alert.show(manager,"TEST");
-
-                        Log.v("APPLICATION", "dd format error");
-                        return;
-                    }
-
+                    mTransmessage.setText("");
+                    amtstr= amountText.getText();
                     transDict =  "{\"Amount\":\""+amtstr+"\",";
-                    //transDict =  "{\"Amount\":\""+".00"+"\",";
                     transDict = transDict + "\"Tender\":\"Credit\"}";
-
                     cmsf.processSale(getApplicationContext(),transDict);
                     break;
                 case R.id.authBtn:
                     amtstr= amountText.getText();
-                    try{
-                        dd=Double.valueOf(amtstr.toString());
-
-
-                    }catch (Exception e)
-                    {
-                        FragmentManager manager = getFragmentManager();
-                        InfoAlert alert= InfoAlert.newInstance("Ammount format error");
-                        //alert.setTargetFragment(MainActivity.this,null);
-                        alert.show(manager,"TEST");
-
-                        Log.v("APPLICATION", "dd format error");
-                        return;
-                    }
-
+                    mTransmessage.setText("");
                     transDict=    "{\"Amount\":\""+amtstr+"\",";
-
                     transDict=transDict + "\"Tender\":\"Credit\"}";
-
                     cmsf.processAuthorization(getApplicationContext(),transDict);
                     break;
                 case R.id.capBtn:
-                    /*transDict=    "{\"Amount\":\"1.00\",\"Reference\":\""+mAuthcodeText.getText()+"\",";
-                    transDict=transDict + "\"Tender\":\"Credit\"}";
-                    cmsf.processCapture(getApplicationContext(),transDict);*/
-
-
-                    //cmsf.processVoid(getApplicationContext(),transDict);
+                    mTransmessage.setText("");
                     FragmentManager manager = getFragmentManager();
                     FileOpt file= new FileOpt(getApplication());
                     JSONArray transarray= file.getTranactions(file.getModuleValue(EMVIOFramework.getmModule()),file.AUTH);
                     mTransArray=transarray;
-                    if (transarray ==null)
-                    {
+                    if (transarray ==null) {
                         return;
                     }
-                    DatePickerFragment dialog = DatePickerFragment.newInstance(transarray.toString());
-                    //dialog.setTargetFragment(get,0);//for get result from fragment
-                    //dialog.sett
+                    TransPickerFragment dialog = TransPickerFragment.newInstance(transarray.toString());
                     dialog.setseltransCompleted(new SelectTransactionCompleted() {
                         @Override
                         public void transactionSelected(int position) {
@@ -440,10 +406,7 @@ public class MainActivity extends AppCompatActivity implements EMVIOListener,Sel
                                 String cardinfo = transinfo.getString("Cardinfo");
                                 cardinfo=cardinfo.replace("\"","\\\"");
                                 transDict =    "{\"Amount\":\""+transinfo.getString("AuthorizedAmount")+"\",\"Reference\":\""+transinfo.getString("Reference")+"\",";
-                                //transDict=transDict + "}";
                                 transDict=transDict + "\"Tender\":\"Credit\",\"Cardinfo\":\""+cardinfo+"\"}";
-
-
                                 cmsf.processCapture(getApplicationContext(),transDict);
                             }catch (JSONException e)
                             {
@@ -452,25 +415,19 @@ public class MainActivity extends AppCompatActivity implements EMVIOListener,Sel
                         }
                     });
                     dialog.show(manager,"ok");
-
-
                     break;
                 case R.id.voidBtn:
-                    //mAuthcodeText.setText("388321a0-7648-4630-8b65-e813c33ad12a");
+                    mTransmessage.setText("");
                     transDict=    "{\"Amount\":\"1.00\",\"Reference\":\""+mAuthcodeText.getText()+"\",";
                     transDict=transDict + "\"Tender\":\"Credit\"}";
-                    //cmsf.processVoid(getApplicationContext(),transDict);
                     FragmentManager manager2 = getFragmentManager();
                     FileOpt file2= new FileOpt(getApplication());
                     JSONArray transarray2= file2.getTranactions(file2.getModuleValue(EMVIOFramework.getmModule()),file2.SALE);
                     mTransArray=transarray2;
-                    if (transarray2 ==null)
-                    {
+                    if (transarray2 ==null) {
                         return;
                     }
-                    DatePickerFragment dialog2 = DatePickerFragment.newInstance(transarray2.toString());
-                    //dialog.setTargetFragment(get,0);//for get result from fragment
-                    //dialog.sett
+                    TransPickerFragment dialog2 = TransPickerFragment.newInstance(transarray2.toString());
                     dialog2.setseltransCompleted(new SelectTransactionCompleted() {
                         @Override
                         public void transactionSelected(int position) {
@@ -483,11 +440,8 @@ public class MainActivity extends AppCompatActivity implements EMVIOListener,Sel
                                 cardinfo=cardinfo.replace("\"","\\\"");
                                 transDict =    "{\"Amount\":\""+transinfo.getString("AuthorizedAmount")+"\",\"Reference\":\""+transinfo.getString("Reference")+"\",";
                                 transDict=transDict + "\"Tender\":\"Credit\",\"Cardinfo\":\""+cardinfo+"\"}";
-
-
                                 cmsf.processVoid(getApplicationContext(),transDict);
-                            }catch (JSONException e)
-                            {
+                            }catch (JSONException e) {
 
                             }
                         }
@@ -495,26 +449,36 @@ public class MainActivity extends AppCompatActivity implements EMVIOListener,Sel
                     dialog2.show(manager2,"ok");
                     break;
                 case R.id.returnBtn:
+                    mTransmessage.setText("");
                     amtstr= amountText.getText();
                     transDict=    "{\"Amount\":\""+amtstr+"\",\"Reference\":\""+mAuthcodeText.getText()+"\",";
                     transDict=transDict + "\"Tender\":\"Credit\"}";
                     cmsf.processReturn(getApplicationContext(),transDict);
                     break;
                 case R.id.selbtn:
-                    for ( String name : cmsf.getPinpads())
-                    {
-                        Log.v("Application","pinpad:"+name);
+                    final String [] pinpadarray = cmsf.getPinpads();
+                    PinpadPickerFragment pinpasdail= PinpadPickerFragment.newInstance(pinpadarray);
+                    pinpasdail.setPinpadSelectedListener(new SelectPinpadCompleted() {
+                        @Override
+                        public void PinpadSelected(int position) {
+                            cmsf.selectPinpad(pinpadarray[position]);
+                            mTransmessage.setText(pinpadarray[position]+" is selected");
+                        }
+                    });
+                   pinpasdail.show(getFragmentManager(),"ok");
+                   enableTrans();
 
-                            cmsf.selectPinpad(name);
-                            //break;
-
-                    }
                     break;
                 case R.id.connectbtn:
                     cmsf.connectPinpad();
+                    String mes = mTransmessage.getText() + "\r\n" + "connecting to pinpad";
+                    mTransmessage.setText(mes);
                     break;
                 case R.id.TMSbtn:
                     cmsf.TMSupdate();
+                    String mes2 = mTransmessage.getText() + "\r\n" + "processing TMS";
+                    mTransmessage.setText(mes2
+                    );
                     break;
             }
         }

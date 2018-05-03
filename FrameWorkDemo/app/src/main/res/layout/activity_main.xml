@@ -23,7 +23,6 @@
             android:gravity="center_vertical"
             android:text="@string/title_home"/>
         <LinearLayout
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
                 <TextView
@@ -49,8 +48,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:hint="please enter amount"
-                    android:inputType="textPersonName"/>
+                    android:hint="please enter amount" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -60,8 +58,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="textPersonName"
-                    />
+                    android:hint="references of transactions" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -70,13 +67,38 @@
                     android:id="@+id/initBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
-                    android:text="INIT"/>
+                    android:text="1 Init"
+                    android:textSize="16dp"/>
+
+                <Button
+                    android:id="@+id/selbtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:text="2 Select Pinpad"
+                    android:textSize="12dp"/>
+                <Button
+                    android:id="@+id/connectbtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_gravity="right"
+                    android:text="3 Connect Pinpad"
+                    android:textSize="12dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+                <Button
+                    android:id="@+id/TMSbtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_gravity="right"
+                    android:text="4 TMS(Opt)"/>
                 <Button
                     android:id="@+id/saleBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:layout_gravity="right"
-                    android:text="Sale"/>
+                    android:text="Sale" />
                 <Button
                     android:id="@+id/authBtn"
                     android:layout_width="wrap_content"
@@ -88,32 +110,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:layout_gravity="right"
-                    android:text="Capture"/>
-
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-                <Button
-                    android:id="@+id/selbtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:text="select"/>
-                <Button
-                    android:id="@+id/connectbtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_gravity="right"
-                    android:text="Connect"/>
-                <Button
-                    android:id="@+id/TMSbtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_gravity="right"
-                    android:text="TMS"/>
-
-
+                    android:text="Capt"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"

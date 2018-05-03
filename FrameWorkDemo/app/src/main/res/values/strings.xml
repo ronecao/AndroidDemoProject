@@ -1,8 +1,9 @@
 <resources>
-    <string name="app_name">FrameWorkDemo</string>
-    <string name="title_home">Demo</string>
+    <string name="app_name">CMS Demo Customer</string>
+    <string name="title_home">CMS Demo</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="init_button">init</string>
-    <string name="date_picker_title">select Date</string>
+    <string name="trans_picker_title">select Trans</string>
+    <string name="pinpad_picker_title">select pinpad</string>
 </resources>
