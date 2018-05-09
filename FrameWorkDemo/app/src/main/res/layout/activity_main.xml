@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.cmsonline.frameworkdemo.MainActivity">
+    tools:context="com.transactionplatform.frameworkdemo.MainActivity">
 
 
 
@@ -69,30 +69,17 @@
                     android:layout_height="50dp"
                     android:text="1 Init"
                     android:textSize="16dp"/>
-
-                <Button
-                    android:id="@+id/selbtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:text="2 Select Pinpad"
-                    android:textSize="12dp"/>
                 <Button
                     android:id="@+id/connectbtn"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:layout_gravity="right"
-                    android:text="3 Connect Pinpad"
+                    android:text="2 Connect Pinpad"
                     android:textSize="12dp"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-                <Button
-                    android:id="@+id/TMSbtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_gravity="right"
-                    android:text="4 TMS(Opt)"/>
                 <Button
                     android:id="@+id/saleBtn"
                     android:layout_width="wrap_content"
@@ -105,16 +92,16 @@
                     android:layout_height="50dp"
                     android:layout_gravity="right"
                     android:text="Auth"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
                 <Button
                     android:id="@+id/capBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:layout_gravity="right"
                     android:text="Capt"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
                 <Button
                     android:id="@+id/voidBtn"
                     android:layout_width="wrap_content"

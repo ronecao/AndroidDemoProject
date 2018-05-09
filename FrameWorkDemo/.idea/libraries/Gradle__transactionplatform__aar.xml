@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: transactionplatform:@aar">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/transactionplatform.aar/019b7a0cac534a948f679287575f9aeb/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/transactionplatform.aar/019b7a0cac534a948f679287575f9aeb/jars/libs/com.datecs.api.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/transactionplatform.aar/019b7a0cac534a948f679287575f9aeb/jars/libs/CardEaseXMLClient.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/transactionplatform.aar/019b7a0cac534a948f679287575f9aeb/jars/classes.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/transactionplatform.aar/019b7a0cac534a948f679287575f9aeb/jars/libs/paymentengine-sdk-2.3.3.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/transactionplatform.aar/019b7a0cac534a948f679287575f9aeb/jars/libs/CardEaseMobile.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/transactionplatform.aar/019b7a0cac534a948f679287575f9aeb/jars/libs/classes-2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
