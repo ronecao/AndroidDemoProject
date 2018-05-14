@@ -4,7 +4,7 @@ android {
     compileSdkVersion 26
     buildToolsVersion '27.0.3'
     defaultConfig {
-        applicationId "com.transactionplatform.frameworkdemocustomer"
+        applicationId "com.slycepay.frameworkdemocustomer"
         minSdkVersion 23
         targetSdkVersion 26
         versionCode 1
@@ -36,6 +36,6 @@ dependencies {
     implementation 'com.android.support:design:26.+'
     implementation 'com.android.support:support-vector-drawable:26.+'
     implementation 'net.zetetic:android-database-sqlcipher:3.5.6@aar'
-    implementation (name:'transactionplatform', ext:'aar')
+    implementation (name:'slycepay', ext:'aar')
     testImplementation 'junit:junit:4.12'
 }
