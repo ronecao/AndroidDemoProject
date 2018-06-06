@@ -86,18 +86,11 @@ public class MainActivity extends AppCompatActivity implements SlycePayListener 
     }
     @Override
     public void deviceDisattached(){
+        String mes = mTransmessage.getText() + "\r\n" + "Disattached";
+        mTransmessage.setText(mes);
 
     }
-    @Override
-    public void verifySignature(boolean verify) {
 
-        cmsf.signatureVerified(true);
-    }
-    @Override
-    public void voiceRefferal(boolean verify,String phone) {
-
-        cmsf.phoneReferral(true,"123456");//testing phone refferal result
-    }
     @Override
    public void transactionMessageUpdate(String msg)
     {
@@ -131,6 +124,11 @@ public class MainActivity extends AppCompatActivity implements SlycePayListener 
         {
 
         }
+    }
+    @Override
+    public void captureSignature(){
+        byte [] image = new byte[1024];
+        cmsf.signatureCaptured(true,image);
     }
     @Override
     public void selectAID(String [] AIDName){
@@ -316,6 +314,7 @@ public class MainActivity extends AppCompatActivity implements SlycePayListener 
                     mAPITokenText.setText("3fyl02KZBOERy7yEd6SkWqbuYmGqHQ2T");
                     cmsf= new SlycePay(getApplicationContext(),mAPITokenText.getText().toString(),MainActivity.this);
                     cmsf.initFramework(getApplicationContext());
+                    Toast.makeText(MainActivity.this, "SlycePay Version"+SlycePay.Version(getApplicationContext()), Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.saleBtn:
                     mTransmessage.setText("");
